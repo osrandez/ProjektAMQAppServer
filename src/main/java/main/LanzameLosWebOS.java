@@ -2,16 +2,12 @@ package main;
 
 import java.io.*;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.ws.rs.core.UriBuilder;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
 import com.sun.net.httpserver.HttpServer;
 
 public class LanzameLosWebOS {
