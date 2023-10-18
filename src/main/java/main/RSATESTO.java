@@ -104,31 +104,4 @@ public class RSATESTO {
         KeyFactory kf = KeyFactory.getInstance("RSA");
         return kf.generatePrivate(ks);
     }
-
-    public static void genKey(){
-        try {
-            KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-
-            kpg.initialize(2048);
-            KeyPair kp = kpg.generateKeyPair();
-
-            Key pub = kp.getPublic();
-            Key pvt = kp.getPrivate();
-
-            String outFile = "elhombRedelSAco";
-            var out = new FileOutputStream(outFile + ".key");
-            out.write(pvt.getEncoded());
-            out.close();
-
-            out = new FileOutputStream(outFile + ".pub");
-            out.write(pub.getEncoded());
-            out.close();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

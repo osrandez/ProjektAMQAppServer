@@ -27,43 +27,55 @@ public class RSAsco {
 
             System.out.println(laBrea);
 
-            String elJaleo = encrypt(laBrea, yuanPublico);
+            var elJaleo = encrypt(laBrea.getBytes(), yuanPublico);
 
-            System.out.println(elJaleo);
+            System.out.println(new String(elJaleo));
 
             PrivateKey yuanPrivado = loadPrivateKey();
 
-            String Jaleont = decrypt(elJaleo, yuanPrivado);
+            var Jaleont = decrypt(elJaleo, yuanPrivado);
 
-            System.out.println(Jaleont);
+            System.out.println(new String(Jaleont));
 
 
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (IOException | BadPaddingException | IllegalBlockSizeException | InvalidKeyException |
-                 NoSuchPaddingException e) {
+        } catch (InvalidKeySpecException | IOException | BadPaddingException | IllegalBlockSizeException |
+                 InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public static String decrypt(String data, PrivateKey privateKey) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
-
-        byte[] bytes = cipher.doFinal(Base64.getDecoder().decode(data));
-        return new String(bytes);
-    }
-    public static String encrypt(String data, PublicKey publicKey) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
+    public static String encrypt(String data, Key publicKey) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
         byte[] bytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
         return new String(Base64.getEncoder().encode(bytes));
     }
+    public static String decrypt(String data, Key privateKey) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
 
+        byte[] bytes = cipher.doFinal(Base64.getDecoder().decode(data));
+        return new String(bytes);
+    }
+
+    public static byte[] encrypt(byte[] data, Key key) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        byte[] bytes = cipher.doFinal(data);
+        return Base64.getEncoder().encode(bytes);
+    }
+    public static byte[] decrypt(byte[] data, Key key) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, key);
+
+        return cipher.doFinal(Base64.getDecoder().decode(data));
+    }
+
+
+    //<editor-fold desc="Claves">
     public static PublicKey loadPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         Path path = Paths.get("elhombRedelSAco.pub");
         byte[] bytes = Files.readAllBytes(path);
@@ -101,11 +113,12 @@ public class RSAsco {
             out.write(pub.getEncoded());
             out.close();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("algot",e);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("fichero", e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("io", e);
         }
     }
+    //</editor-fold>
 }
