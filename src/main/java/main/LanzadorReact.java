@@ -10,7 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-public class LanzameLosWebOS {
+public class LanzadorReact {
         private final static String htemele = "web\\pito.html";
         public static void main(String[] args) throws IOException {
             HttpServer server = HttpServer.create(new InetSocketAddress("localhost",8080),0);

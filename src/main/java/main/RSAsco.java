@@ -85,6 +85,12 @@ public class RSAsco {
         return kf.generatePublic(ks);
     }
 
+    public static PublicKey loadPublicKey(byte[] data) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        X509EncodedKeySpec ks = new X509EncodedKeySpec(data);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePublic(ks);
+    }
+
     public static PrivateKey loadPrivateKey() throws InvalidKeySpecException, NoSuchAlgorithmException, IOException {
         Path path = Paths.get("elhombRedelSAco.key");
         byte[] bytes = Files.readAllBytes(path);

@@ -97,6 +97,10 @@ class AEStalkear {
         byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         return new IvParameterSpec(iv);
     }
+    public static IvParameterSpec generateIV(byte nonce) {
+        byte[] iv = {nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce,nonce};
+        return new IvParameterSpec(iv);
+    }
     public static SecretKeySpec generateKey() {
         return generateKey(PASSPHRASE, SALT);
     }
