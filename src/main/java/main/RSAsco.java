@@ -45,6 +45,7 @@ public class RSAsco {
 
     }
 
+    //<editor-fold desc="RSA Strings">
     public static String encrypt(String data, Key publicKey) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -59,7 +60,9 @@ public class RSAsco {
         byte[] bytes = cipher.doFinal(Base64.getDecoder().decode(data));
         return new String(bytes);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="RSA Bytes">
     public static byte[] encrypt(byte[] data, Key key) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -73,7 +76,7 @@ public class RSAsco {
 
         return cipher.doFinal(Base64.getDecoder().decode(data));
     }
-
+    //</editor-fold>
 
     //<editor-fold desc="Claves">
     public static PublicKey loadPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
